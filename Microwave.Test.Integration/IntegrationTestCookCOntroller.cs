@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using MicrowaveOvenClasses.Interfaces;
 using MicrowaveOvenClasses.Controllers;
-
+using MicrowaveOvenClasses.Boundary;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -21,6 +22,7 @@ namespace Microwave.Test.Integration
         private IPowerTube _powerTube;
         private ITimer _timer;
         private IOutput _output;
+        private IUserInterface _interface;
 
         [SetUp]
         public void Setup()
@@ -28,9 +30,9 @@ namespace Microwave.Test.Integration
             _timer = Substitute.For<ITimer>();
             _powerTube = Substitute.For<IPowerTube>();
             _display = Substitute.For<IDisplay>();
-            //_cookController = Substitute.For<ICookController>();
             _output = Substitute.For<IOutput>();
-            _cookController = new CookController(_timer, _display, _powerTube);
+            _interface = Substitute.For<IUserInterface>();
+            _cookController = new CookController(_timer, _display, _powerTube, _interface);
 
         }
 
@@ -68,12 +70,30 @@ namespace Microwave.Test.Integration
         }
 
         [Test]
-        //[TestCase(50,10)]
-        public void CookControllerDisplayPower()
+        public void CookControllerDisplayTime()
         {
-            _cookController.StartCooking(50, 10);
-            _display.Received().ShowPower(10);
+            _cookController.StartCooking(50,6000);
+            _timer.TimeRemaining.Returns(10000);
+            _timer.TimerTick += Raise.EventWith(this, EventArgs.Empty);
+            _display.Received().ShowTime(00,10);
             
+        }
+
+        [Test]
+        public void CookControllerTimerExpired()
+        {
+            _cookController.StartCooking(50,0);
+            _timer.Expired += Raise.EventWith(this, EventArgs.Empty);
+            _powerTube.Received().TurnOff();
+            
+        }
+        [Test]
+        public void CookControllerCookingIsDone()
+        {
+            _cookController.StartCooking(50, 0);
+            _timer.Expired += Raise.EventWith(this, EventArgs.Empty);
+           _interface.Received().CookingIsDone();
+
         }
 
     }
