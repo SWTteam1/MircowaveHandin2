@@ -36,23 +36,45 @@ namespace Microwave.Test.Integration
 
         [Test]
         [TestCase(50, 10)]
-        public void CookControllerStartup(int power, int time)
+        public void CookControllerStart(int power, int time)
         {
             _cookController.StartCooking(power, time);
-
             _powerTube.Received().TurnOn(power);
 
         }
 
         [Test]
         [TestCase(50, 10)]
-        public void CookControllerStartTimer(int time)
+        public void CookControllerStartTimer(int power, int time)
         {
             _cookController.StartCooking(power, time);
             _timer.Received().Start(time);
 
         }
 
+        [Test]
+        public void CookControllerStop()
+        {
+            _cookController.Stop();
+            _powerTube.Received().TurnOff();
+        }
+
+        [Test]
+        public void CookControllerStopTimer()
+        {
+            _cookController.Stop();
+            _timer.Received().Stop();
+
+        }
+
+        [Test]
+        //[TestCase(50,10)]
+        public void CookControllerDisplayPower()
+        {
+            _cookController.StartCooking(50, 10);
+            _display.Received().ShowPower(10);
+            
+        }
 
     }
 }
