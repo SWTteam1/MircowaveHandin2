@@ -1,5 +1,6 @@
 ﻿using System;
 using MicrowaveOvenClasses.Boundary;
+using MicrowaveOvenClasses.Controllers;
 using MicrowaveOvenClasses.Interfaces;
 using NSubstitute;
 using NUnit.Framework;
@@ -14,6 +15,12 @@ namespace Microwave.Test.Integration
         private ILight _light;
         private IDisplay _display;
         private ICookController _cookController;
+        private IPowerTube _powerTube;
+        private ITimer _timer;
+        private IOutput _output;
+        private IButton _powerButton;
+        private IButton _timeButton;
+        private IButton _startCancelButton;
 
         [SetUp]
         public void Setup()
@@ -21,8 +28,14 @@ namespace Microwave.Test.Integration
             _light = Substitute.For<ILight>();
             _display = Substitute.For<IDisplay>();
             _cookController = Substitute.For<ICookController>();
-            _userInterface = Substitute.For<IUserInterface>();
+            _powerTube = Substitute.For<IPowerTube>();
+            _timer = Substitute.For<ITimer>();
+            _powerButton = new Button();
+            _timeButton = new Button();
+            _startCancelButton = new Button();
             _door = new Door();
+            _userInterface = new UserInterface(_powerButton, _timeButton, _startCancelButton, _door, _display, _light, _cookController);
+
         }
 
         [Test]
@@ -36,10 +49,11 @@ namespace Microwave.Test.Integration
         [Test]
         public void DoorClose()
         {
-            //_door.Open();
+            _door.Open();
             _door.Close();
-            _userInterface.Received().OnDoorClosed(this, EventArgs.Empty);
-            //_light.Received().TurnOff();
+            _light.Received().TurnOff();
+            //_userInterface.Received().OnDoorClosed(this, EventArgs.Empty);
+            
         }
     }
 }
