@@ -66,6 +66,7 @@
     <Compile Include="IT1_OutputLight.cs" />
     <Compile Include="IT2_OutputDisplay.cs" />
     <Compile Include="IT3_OutputPowerTube.cs" />
+    <Compile Include="IT4_CookController1.cs" />
     <Compile Include="IT4_CookController.cs" />
     <Compile Include="IT5_Door.cs" />
     <Compile Include="IT6_Button.cs" />
