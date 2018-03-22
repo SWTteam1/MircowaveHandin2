@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using MicrowaveOvenClasses.Interfaces;
 using MicrowaveOvenClasses.Controllers;
 using MicrowaveOvenClasses.Boundary;
-using NSubstitute;
 using NUnit.Framework;
+using NSubstitute;
 
 namespace Microwave.Test.Integration
 {
@@ -57,7 +58,79 @@ namespace Microwave.Test.Integration
 
         }
 
-        //[Test]
-        //public void 
+        [Test]
+        public void UserInterface_LightOn()
+        {
+            _interface.OnPowerPressed(_powerButton, EventArgs.Empty);
+            _interface.OnTimePressed(_timeButton, EventArgs.Empty);
+            _interface.OnStartCancelPressed(_scButton, EventArgs.Empty);
+            _light.Received().TurnOn();
+        }
+
+
+        [Test]
+        public void UserInterface_LightOff()
+        {
+            _interface.OnPowerPressed(_powerButton, EventArgs.Empty);
+            _interface.OnTimePressed(_timeButton, EventArgs.Empty);
+            _interface.OnStartCancelPressed(_scButton, EventArgs.Empty);
+            _interface.CookingIsDone();
+            _light.Received().TurnOff();
+        }
+
+
+        [Test]
+        public void UserInterface_DoorOpen_LightOn()
+        {
+            _interface.OnDoorOpened(_door, EventArgs.Empty);
+            _light.Received().TurnOn();
+        }
+
+        [Test]
+        public void UserInterface_DoorClosed_LightOff()
+        {
+            _interface.OnDoorOpened(_door, EventArgs.Empty);
+            _interface.OnDoorClosed(_door, EventArgs.Empty);
+            _light.Received().TurnOff();
+        }
+
+
+
+        [Test]
+        public void UserInterface_DisplayShowTime()
+        {
+            _interface.OnPowerPressed(_powerButton, EventArgs.Empty);
+            _interface.OnTimePressed(_timeButton, EventArgs.Empty);
+            _display.Received().ShowTime(1,0);
+        }
+
+        [Test]
+        public void UserInterface_CookingIsDone_LightOff()
+        {
+            _interface.OnPowerPressed(_powerButton, EventArgs.Empty);
+            _interface.OnTimePressed(_timeButton, EventArgs.Empty);
+            _interface.OnStartCancelPressed(_scButton, EventArgs.Empty);
+            _interface.CookingIsDone();
+            _light.Received().TurnOff();
+        }
+
+
+        [Test]
+        public void UserInterface_CookingDoneDisplayClear()
+        {
+            _interface.OnPowerPressed(_powerButton, EventArgs.Empty);
+            _interface.OnTimePressed(_timeButton, EventArgs.Empty);
+            _interface.OnStartCancelPressed(_scButton, EventArgs.Empty);
+            _interface.CookingIsDone();
+            _display.Received().Clear();
+        }
+
+        [Test]
+        public void UserInterface_DisplayShowPower()
+        {
+            _interface.OnPowerPressed(_powerButton, EventArgs.Empty);
+            _display.Received().ShowPower(50);
+        }
+
     }
 }
