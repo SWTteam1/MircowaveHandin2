@@ -42,7 +42,6 @@ namespace Microwave.Test.Integration
         public void DoorOpen()
         {
             _door.Open();
-            //_userInterface.Received().OnDoorOpened(this, EventArgs.Empty);
             _light.Received().TurnOn();
         }
 
@@ -52,8 +51,6 @@ namespace Microwave.Test.Integration
             _door.Open();
             _door.Close();
             _light.Received().TurnOff();
-            //_userInterface.Received().OnDoorClosed(this, EventArgs.Empty);
-            
         }
     }
 }

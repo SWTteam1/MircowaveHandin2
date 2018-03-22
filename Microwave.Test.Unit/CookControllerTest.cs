@@ -48,10 +48,12 @@ namespace Microwave.Test.Unit
         {
             uut.StartCooking(50, 60);
 
-            timer.TimeRemaining.Returns(115);
+            //Er blevet tilpasset, så den fungerer med milisekunder
+            timer.TimeRemaining.Returns(10000);
             timer.TimerTick += Raise.EventWith(this, EventArgs.Empty);
 
-            display.Received().ShowTime(1, 55);
+            //Også tilpasset
+            display.Received().ShowTime(0, 10);
         }
 
         [Test]

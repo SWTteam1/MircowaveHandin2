@@ -18,7 +18,7 @@ namespace Microwave.Test.Integration
         private ILight _light;
         private IDisplay _display;
         private ICookController _cookController;
-        private IButton _powerButton, _timeButton,_scButton;
+        private IButton _powerButton, _timeButton, _scButton;
 
         private IDoor _door;
 
@@ -32,7 +32,8 @@ namespace Microwave.Test.Integration
             _timeButton = Substitute.For<IButton>();
             _scButton = Substitute.For<IButton>();
             _cookController = Substitute.For<ICookController>();
-            _interface = new UserInterface(_powerButton, _timeButton, _scButton,_door,_display,_light, _cookController);
+            _interface = new UserInterface(_powerButton, _timeButton, _scButton, _door, _display, _light,
+                _cookController);
 
         }
 
@@ -42,7 +43,7 @@ namespace Microwave.Test.Integration
             _interface.OnPowerPressed(_powerButton, EventArgs.Empty);
             _interface.OnTimePressed(_timeButton, EventArgs.Empty);
             _interface.OnStartCancelPressed(_scButton, EventArgs.Empty);
-            _cookController.Received().StartCooking(50,60);
+            _cookController.Received().StartCooking(50, 60);
         }
 
         [Test]
@@ -56,7 +57,7 @@ namespace Microwave.Test.Integration
 
         }
 
-        [Test]
-        public void 
+        //[Test]
+        //public void 
     }
 }
