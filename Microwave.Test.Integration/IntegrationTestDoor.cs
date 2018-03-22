@@ -17,7 +17,6 @@ namespace Microwave.Test.Integration
         private ICookController _cookController;
         private IPowerTube _powerTube;
         private ITimer _timer;
-        private IOutput _output;
         private IButton _powerButton;
         private IButton _timeButton;
         private IButton _startCancelButton;

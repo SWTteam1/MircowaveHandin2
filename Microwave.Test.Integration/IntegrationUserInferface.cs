@@ -117,7 +117,7 @@ namespace Microwave.Test.Integration
 
         [Test]
         public void UserInterface_CookingDoneDisplayClear()
-        {
+        { 
             _interface.OnPowerPressed(_powerButton, EventArgs.Empty);
             _interface.OnTimePressed(_timeButton, EventArgs.Empty);
             _interface.OnStartCancelPressed(_scButton, EventArgs.Empty);
