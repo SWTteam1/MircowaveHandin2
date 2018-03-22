@@ -63,8 +63,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IntegrationTestButton.cs" />
     <Compile Include="IntegrationTestCookCOntroller.cs" />
     <Compile Include="IntegrationTestDoor.cs" />
+    <Compile Include="IntegrationUserInferface.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
