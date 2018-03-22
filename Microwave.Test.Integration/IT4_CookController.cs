@@ -15,7 +15,7 @@ namespace Microwave.Test.Integration
 
     [TestFixture]
 
-    class IntegrationTestCookCOntroller
+    class IT4_CookController
     {
         private ICookController _cookController;
         private IDisplay _display;
@@ -72,27 +72,27 @@ namespace Microwave.Test.Integration
         [Test]
         public void CookControllerDisplayTime()
         {
-            _cookController.StartCooking(50,6000);
+            _cookController.StartCooking(50, 6000);
             _timer.TimeRemaining.Returns(10000);
             _timer.TimerTick += Raise.EventWith(this, EventArgs.Empty);
-            _display.Received().ShowTime(00,10);
-            
+            _display.Received().ShowTime(00, 10);
+
         }
 
         [Test]
         public void CookControllerTimerExpired()
         {
-            _cookController.StartCooking(50,0);
+            _cookController.StartCooking(50, 0);
             _timer.Expired += Raise.EventWith(this, EventArgs.Empty);
             _powerTube.Received().TurnOff();
-            
+
         }
         [Test]
         public void CookControllerCookingIsDone()
         {
             _cookController.StartCooking(50, 0);
             _timer.Expired += Raise.EventWith(this, EventArgs.Empty);
-           _interface.Received().CookingIsDone();
+            _interface.Received().CookingIsDone();
 
         }
 

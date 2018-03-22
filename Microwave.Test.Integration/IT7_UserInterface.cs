@@ -13,7 +13,7 @@ using NSubstitute;
 
 namespace Microwave.Test.Integration
 {
-    class IntegrationUserInferface
+    class IT7_UserInterface
     {
         private IUserInterface _interface;
         private ILight _light;
@@ -101,7 +101,7 @@ namespace Microwave.Test.Integration
         {
             _interface.OnPowerPressed(_powerButton, EventArgs.Empty);
             _interface.OnTimePressed(_timeButton, EventArgs.Empty);
-            _display.Received().ShowTime(1,0);
+            _display.Received().ShowTime(1, 0);
         }
 
         [Test]
@@ -117,7 +117,7 @@ namespace Microwave.Test.Integration
 
         [Test]
         public void UserInterface_CookingDoneDisplayClear()
-        { 
+        {
             _interface.OnPowerPressed(_powerButton, EventArgs.Empty);
             _interface.OnTimePressed(_timeButton, EventArgs.Empty);
             _interface.OnStartCancelPressed(_scButton, EventArgs.Empty);

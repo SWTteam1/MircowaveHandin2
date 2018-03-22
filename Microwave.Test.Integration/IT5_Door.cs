@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace Microwave.Test.Integration
 {
     [TestFixture]
-    public class IntegrationTestDoor
+    public class IT5_Door
     {
         private IDoor _door;
         private IUserInterface _userInterface;

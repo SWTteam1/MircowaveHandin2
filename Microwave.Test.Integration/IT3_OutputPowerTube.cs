@@ -7,7 +7,7 @@ using NSubstitute;
 namespace Microwave.Test.Integration
 {
     [TestFixture]
-    public class IntegrationTestOutputPowerTube
+    public class IT3_OutputPowerTube
     {
         private IOutput _output;
         private IPowerTube _powerTube;
@@ -24,7 +24,7 @@ namespace Microwave.Test.Integration
         public void PowerTubeTurnOn()
         {
             _powerTube.TurnOn(50);
-            _output.Received().OutputLine(Arg.Is<string>(str=>str.Contains("PowerTube works with 50 %")));
+            _output.Received().OutputLine(Arg.Is<string>(str => str.Contains("PowerTube works with 50 %")));
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace Microwave.Test.Integration
         {
             _powerTube.TurnOn(50);
             _powerTube.TurnOff();
-            _output.Received().OutputLine(Arg.Is<string>(str=>str.Contains("PowerTube turned off")));
+            _output.Received().OutputLine(Arg.Is<string>(str => str.Contains("PowerTube turned off")));
         }
 
     }

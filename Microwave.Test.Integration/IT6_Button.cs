@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Microwave.Test.Integration
 {
-    class IntegrationTestButton
+    class IT6_Button
     {
         private IDoor _door;
         private ICookController _cookController;
@@ -29,7 +29,7 @@ namespace Microwave.Test.Integration
         [SetUp]
         public void Setup()
         {
-        
+
             _door = Substitute.For<IDoor>();
             _cookController = Substitute.For<ICookController>();
             _display = Substitute.For<IDisplay>();
@@ -40,7 +40,7 @@ namespace Microwave.Test.Integration
             _powerButton = new Button();
             _timeButton = new Button();
             _startCancelButton = new Button();
-            _interface = new UserInterface(_powerButton, _timeButton, _startCancelButton, _door, _display, _light, _cookController);      
+            _interface = new UserInterface(_powerButton, _timeButton, _startCancelButton, _door, _display, _light, _cookController);
 
         }
 
@@ -49,7 +49,7 @@ namespace Microwave.Test.Integration
         {
             _powerButton.Press();
             _timeButton.Press();
-            _display.Received().ShowTime(1,0);
+            _display.Received().ShowTime(1, 0);
         }
 
         [Test]
@@ -57,7 +57,7 @@ namespace Microwave.Test.Integration
         {
             _powerButton.Press();
             _display.Received().ShowPower(50);
-           
+
         }
 
         [Test]
@@ -67,7 +67,7 @@ namespace Microwave.Test.Integration
             _timeButton.Press();
             _startCancelButton.Press();
             _startCancelButton.Press();
-            _light.Received().TurnOff();   
+            _light.Received().TurnOff();
         }
 
         [Test]

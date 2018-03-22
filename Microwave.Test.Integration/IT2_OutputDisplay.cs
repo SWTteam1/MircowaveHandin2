@@ -11,7 +11,7 @@ using NUnit.Framework;
 namespace Microwave.Test.Integration
 {
     [TestFixture]
-    class IntegrationDisplayOutput
+    class IT2_OutputDisplay
     {
         private IOutput _output;
         private IDisplay _display;
@@ -40,5 +40,3 @@ namespace Microwave.Test.Integration
         }
     }
 }
-  
-

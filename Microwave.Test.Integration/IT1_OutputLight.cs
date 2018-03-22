@@ -1,12 +1,13 @@
-﻿using MicrowaveOvenClasses.Boundary;
-using MicrowaveOvenClasses.Interfaces;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using NSubstitute;
+using MicrowaveOvenClasses.Boundary;
+using MicrowaveOvenClasses.Controllers;
+using MicrowaveOvenClasses.Interfaces;
 
 namespace Microwave.Test.Integration
 {
     [TestFixture]
-    public class IntegrationTestOutputLight
+    public class IT1_OutputLight
     {
         private IOutput _output;
         private ILight _light;
