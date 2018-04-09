@@ -27,18 +27,14 @@ namespace Microwave.Test.Integration
         [SetUp]
         public void Setup()
         {
-            
-            
             _output = Substitute.For<IOutput>();
             _interface = Substitute.For<IUserInterface>();
             _timer = new MicrowaveOvenClasses.Boundary.Timer();
             _powerTube = new PowerTube(_output);
             _display = new Display(_output);
             _cookController = new CookController(_timer, _display, _powerTube, _interface);
-
         }
 
-        [Test]
         [TestCase(50, 10)]
         public void CookControllerStart(int power, int time)
         {

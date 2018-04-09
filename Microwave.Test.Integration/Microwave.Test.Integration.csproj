@@ -63,7 +63,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IT1_OutputLight.cs" />
+    <Compile Include="IT1_Light.cs" />
+    <Compile Include="IT2_Display.cs" />
+    <Compile Include="IT2_DPTCookController.cs" />
     <Compile Include="IT2_OutputDisplay.cs" />
     <Compile Include="IT3_OutputPowerTube.cs" />
     <Compile Include="IT4_CookController1.cs" />
