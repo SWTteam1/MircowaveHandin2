@@ -32,29 +32,30 @@ namespace Microwave.Test.Integration
             _output = Substitute.For<IOutput>();
             _light = Substitute.For<ILight>();
             _timer = Substitute.For<ITimer>();
-            _cookController = ;
+            _cookController = Substitute.For<ICookController>();
             _uutDisplay = new Display(_output);
             _userInterface = new UserInterface(_powerButton, _timeButton, _startCancelButton, _door, _uutDisplay, _light, _cookController);
         }
 
-        //Frank vil du hjælpe?
+        
         [TestCase(12,30)]
         public void CookingDone_ClearDisplay(int min, int power)
         {
-            _cookController.StartCooking(power, min);
-            _timer.TimeRemaining.Returns(0);
-            
+           
+            _userInterface.OnPowerPressed(_powerButton, EventArgs.Empty);
+            _userInterface.OnTimePressed(_timeButton, EventArgs.Empty);
+            _userInterface.OnStartCancelPressed(_startCancelButton, EventArgs.Empty);
             _userInterface.CookingIsDone();
+
             _output.Received().OutputLine(Arg.Is<string>(str => str.Contains("Display cleared")));
-        }
 
-        [TestCase(12,30)]
-        public void Cooking_ShowTime(int min, int power)
-        {
-            _cookController.StartCooking(power, min);
-            _timer.TimerTick += Raise.EventWith(_timer, EventArgs.Empty);
-            Thread.Sleep()
 
         }
+
+      
+
+
+
+        
     }
 }

@@ -65,14 +65,11 @@
   <ItemGroup>
     <Compile Include="IT1_Light.cs" />
     <Compile Include="IT2_Display.cs" />
-    <Compile Include="IT2_DPTCookController.cs" />
-    <Compile Include="IT2_OutputDisplay.cs" />
-    <Compile Include="IT3_OutputPowerTube.cs" />
-    <Compile Include="IT4_CookController1.cs" />
+    <Compile Include="IT3_DPT.cs" />
     <Compile Include="IT4_CookController.cs" />
     <Compile Include="IT5_Door.cs" />
+    <Compile Include="IT5_UserInterface.cs" />
     <Compile Include="IT6_Button.cs" />
-    <Compile Include="IT7_UserInterface.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

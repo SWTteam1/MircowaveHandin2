@@ -1,100 +1,71 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using MicrowaveOvenClasses.Interfaces;
+using NUnit.Framework;
+using NSubstitute; 
 using MicrowaveOvenClasses.Controllers;
 using MicrowaveOvenClasses.Boundary;
-using NSubstitute;
-using NUnit.Framework;
+using MicrowaveOvenClasses.Interfaces;
+using Timer = MicrowaveOvenClasses.Boundary.Timer;
 
 namespace Microwave.Test.Integration
 {
-
     [TestFixture]
-
-    class IT4_CookController
+    public class IT4_CookController
     {
-        private ICookController _cookController;
+
+        private IButton _powerButton;
+        private IButton _timeButton;
+        private IButton _startCancelButton;
+        private IDoor _door;
         private IDisplay _display;
-        private IPowerTube _powerTube;
-        private ITimer _timer;
+        private CookController _cookController;
         private IOutput _output;
-        private IUserInterface _interface;
+        private ILight _light;
+        private IUserInterface _userInterface;
+        private ITimer _timer;
+        private IPowerTube _powerTube;
+
 
         [SetUp]
-        public void Setup()
+        public void SetUp()
         {
-            _timer = Substitute.For<ITimer>();
-            _powerTube = Substitute.For<IPowerTube>();
-            _display = Substitute.For<IDisplay>();
+            _powerButton = Substitute.For<IButton>();
+            _timeButton = Substitute.For<IButton>();
+            _startCancelButton = Substitute.For<IButton>();
+            _door = Substitute.For<IDoor>();
             _output = Substitute.For<IOutput>();
-            _interface = Substitute.For<IUserInterface>();
-            _cookController = new CookController(_timer, _display, _powerTube, _interface);
-
+         
+            _timer = new Timer();
+            _display = new Display(_output);
+            _powerTube = new PowerTube(_output);
+            _light = new Light(_output);
+            _cookController = new CookController(_timer, _display, _powerTube);
+            _userInterface = new UserInterface(_powerButton, _timeButton, _startCancelButton, _door, _display, _light, _cookController);
+            _cookController.UI = _userInterface;
         }
+
 
         [Test]
-        [TestCase(50, 10)]
-        public void CookControllerStart(int power, int time)
+        public void StartCooking()
         {
-            _cookController.StartCooking(power, time);
-            _powerTube.Received().TurnOn(power);
+            _userInterface.OnPowerPressed(_powerButton, EventArgs.Empty);
+            _userInterface.OnTimePressed(_timeButton, EventArgs.Empty);
+            _userInterface.OnStartCancelPressed(_startCancelButton, EventArgs.Empty);
 
+
+            _output.Received().OutputLine(Arg.Is<string>(str => str.Contains((50 / 7).ToString())));
         }
+
 
         [Test]
-        [TestCase(50, 10)]
-        public void CookControllerStartTimer(int power, int time)
+        public void CookingIsDone()
         {
-            _cookController.StartCooking(power, time);
-            _timer.Received().Start(time);
+            _userInterface.OnPowerPressed(_powerButton, EventArgs.Empty);
+            _userInterface.OnTimePressed(_timeButton, EventArgs.Empty);
+            _userInterface.OnStartCancelPressed(_startCancelButton, EventArgs.Empty);
+            Thread.Sleep(1000*60);
 
+            _output.Received().OutputLine(Arg.Is<string>(str => str.Contains(("Display cleared"))));
         }
-
-        [Test]
-        public void CookControllerStop()
-        {
-            _cookController.Stop();
-            _powerTube.Received().TurnOff();
-        }
-
-        [Test]
-        public void CookControllerStopTimer()
-        {
-            _cookController.Stop();
-            _timer.Received().Stop();
-
-        }
-
-        [Test]
-        public void CookControllerDisplayTime()
-        {
-            _cookController.StartCooking(50, 6000);
-            _timer.TimeRemaining.Returns(10000);
-            _timer.TimerTick += Raise.EventWith(this, EventArgs.Empty);
-            _display.Received().ShowTime(00, 10);
-
-        }
-
-        [Test]
-        public void CookControllerTimerExpired()
-        {
-            _cookController.StartCooking(50, 0);
-            _timer.Expired += Raise.EventWith(this, EventArgs.Empty);
-            _powerTube.Received().TurnOff();
-
-        }
-        [Test]
-        public void CookControllerCookingIsDone()
-        {
-            _cookController.StartCooking(50, 0);
-            _timer.Expired += Raise.EventWith(this, EventArgs.Empty);
-            _interface.Received().CookingIsDone();
-
-        }
-
     }
 }
