@@ -57,15 +57,27 @@ namespace Microwave.Test.Integration
         }
 
         [Test]
-        public void Fedt()
+        public void PowerButton_Pressed()
         {
             _powerButton.Press();
-            //_output.Received().OutputLine(Arg.Is<string>(str => str.Contains($"D")));
-            //_output.Received().OutputLine(Arg.Is<string>(str => str.Contains((50 / 7).ToString())))
-
-
+            _output.Received().OutputLine(Arg.Is<string>(str => str.Contains((50 / 7).ToString())));
         }
 
+        [Test]
+        public void TimeButton_Pressed()
+        {
+            _powerButton.Press();
+            _timeButton.Press();
+            _output.Received().OutputLine(Arg.Is<string>(str => str.Contains("Display shows: 01:00")));
+        }
 
+        [Test]
+        public void StartCancelButton_Pressed()
+        {
+            _powerButton.Press();
+            _timeButton.Press();
+            _startCancelButton.Press();
+            _output.Received().OutputLine(Arg.Is<string>(str => str.Contains("PowerTube works with 50 W")));
+        }
     }
 }

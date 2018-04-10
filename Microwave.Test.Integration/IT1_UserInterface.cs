@@ -8,7 +8,7 @@ using MicrowaveOvenClasses.Interfaces;
 namespace Microwave.Test.Integration
 {
     [TestFixture]
-    public class IT1_Light
+    public class IT1_UserInterface
     {
         private IButton _powerButton;
         private IButton _timeButton;
@@ -17,8 +17,8 @@ namespace Microwave.Test.Integration
         private IDisplay _display;
         private ICookController _cookController;
         private IOutput _output;
-        private ILight _uutLight;
-        private IUserInterface _userInterface;
+        private Light _light;
+        private UserInterface _uutUserInterface;
 
         [SetUp]
         public void SetUp()
@@ -30,22 +30,25 @@ namespace Microwave.Test.Integration
             _display = Substitute.For<IDisplay>();
             _cookController = Substitute.For<ICookController>();
             _output = Substitute.For<IOutput>();
-            _uutLight = new Light(_output);
-            _userInterface = new UserInterface(_powerButton, _timeButton, _startCancelButton, _door, _display, _uutLight, _cookController);
+            _light = new Light(_output);
+            _uutUserInterface = new UserInterface(_powerButton, _timeButton, _startCancelButton, 
+                _door, _display, _light, _cookController);
         }
 
         [Test]
         public void DoorOpen_LightOn()
         {
-            _userInterface.OnDoorOpened(_door, EventArgs.Empty);
+            _uutUserInterface.OnDoorOpened(_door, EventArgs.Empty);
             _output.Received().OutputLine(Arg.Is<string>(str => str.Contains("Light is turned on")));
         }
 
         [Test]
         public void DoorClosed_LightOff()
         {
-            _userInterface.OnDoorOpened(_door, EventArgs.Empty);
-            _userInterface.OnDoorClosed(_door, EventArgs.Empty);
+            //Sets state to "DOOROPEN"
+            _uutUserInterface.OnDoorOpened(_door, EventArgs.Empty);
+
+            _uutUserInterface.OnDoorClosed(_door, EventArgs.Empty);
             _output.Received().OutputLine(Arg.Is<string>(str => str.Contains("Light is turned off")));
         }
     }

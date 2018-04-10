@@ -63,13 +63,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IT1_Light.cs" />
-    <Compile Include="IT2_Display.cs" />
-    <Compile Include="IT3_DPT.cs" />
-    <Compile Include="IT4_CookController.cs" />
-    <Compile Include="IT5_Door.cs" />
+    <Compile Include="IT1_UserInterface.cs" />
+    <Compile Include="IT2_UserInterface.cs" />
+    <Compile Include="IT3_CookController.cs" />
+    <Compile Include="IT4_UserInterfaceCookController.cs" />
     <Compile Include="IT5_UserInterface.cs" />
-    <Compile Include="IT6_Button.cs" />
+    <Compile Include="IT6_Output.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

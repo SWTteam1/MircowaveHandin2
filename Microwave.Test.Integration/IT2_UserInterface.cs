@@ -9,18 +9,17 @@ using NUnit.Framework;
 namespace Microwave.Test.Integration
 {
     [TestFixture]
-    public class IT2_Display
+    public class IT2_UserInterface
     {
         private IButton _powerButton;
         private IButton _timeButton;
         private IButton _startCancelButton;
         private IDoor _door;
-        private IDisplay _uutDisplay;
+        private Display _display;
         private ICookController _cookController;
         private IOutput _output;
         private ILight _light;
-        private IUserInterface _userInterface;
-        private ITimer _timer;
+        private UserInterface _uutUserInterface;
 
         [SetUp]
         public void SetUp()
@@ -30,32 +29,25 @@ namespace Microwave.Test.Integration
             _startCancelButton = Substitute.For<IButton>();
             _door = Substitute.For<IDoor>();
             _output = Substitute.For<IOutput>();
-            _light = Substitute.For<ILight>();
-            _timer = Substitute.For<ITimer>();
             _cookController = Substitute.For<ICookController>();
-            _uutDisplay = new Display(_output);
-            _userInterface = new UserInterface(_powerButton, _timeButton, _startCancelButton, _door, _uutDisplay, _light, _cookController);
+            _light = new Light(_output);
+            _display = new Display(_output);
+            _uutUserInterface = new UserInterface(_powerButton, _timeButton, 
+                _startCancelButton, _door, _display, _light, _cookController);
         }
 
         
         [TestCase(12,30)]
         public void CookingDone_ClearDisplay(int min, int power)
         {
-           
-            _userInterface.OnPowerPressed(_powerButton, EventArgs.Empty);
-            _userInterface.OnTimePressed(_timeButton, EventArgs.Empty);
-            _userInterface.OnStartCancelPressed(_startCancelButton, EventArgs.Empty);
-            _userInterface.CookingIsDone();
+            //Sets state to "COOKING"
+            _uutUserInterface.OnPowerPressed(_powerButton, EventArgs.Empty);
+            _uutUserInterface.OnTimePressed(_timeButton, EventArgs.Empty);
+            _uutUserInterface.OnStartCancelPressed(_startCancelButton, EventArgs.Empty);
+            
+            _uutUserInterface.CookingIsDone();
 
             _output.Received().OutputLine(Arg.Is<string>(str => str.Contains("Display cleared")));
-
-
         }
-
-      
-
-
-
-        
     }
 }
