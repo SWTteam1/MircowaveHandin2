@@ -8,7 +8,7 @@ using MicrowaveOvenClasses.Interfaces;
 namespace Microwave.Test.Integration
 {
     [TestFixture]
-    public class IT1_UserInterface
+    public class IT1_Light
     {
         private IButton _powerButton;
         private IButton _timeButton;

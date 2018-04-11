@@ -7,7 +7,7 @@ using NSubstitute;
 namespace Microwave.Test.Integration
 {
     [TestFixture]
-    public class IT5_UserInterface
+    public class IT5_Door_Button
     {
         private IButton _powerButton;
         private IButton _timeButton;

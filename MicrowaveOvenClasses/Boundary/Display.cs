@@ -18,6 +18,7 @@ namespace MicrowaveOvenClasses.Boundary
 
         public void ShowPower(int power)
         {
+            //Dividerer med 7, for at få power i procent
             myOutput.OutputLine($"Display shows: {power/7} %");
         }
 
